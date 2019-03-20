@@ -13,6 +13,15 @@ describe "restricted array" do
     my_integer_array_length.must_equal size
   end
 
+  it "length method on empty restricted array" do
+    size = 0
+    my_integer_array = RestrictedArray.new(size)
+
+    my_integer_array_length = length(my_integer_array)
+
+    my_integer_array_length.must_equal size
+  end
+
   it "linear search method - value exists in the middle, in the array" do
     size = 9
     my_integer_array = RestrictedArray.new(size)
