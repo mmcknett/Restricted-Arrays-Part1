@@ -55,6 +55,14 @@ describe "restricted array" do
     search(my_integer_array, size, value_to_find).must_equal false
   end
 
+  it "find largest in empty array returns nil" do
+    size = 0
+    my_integer_array = RestrictedArray.new(size)
+
+    largest = find_largest(my_integer_array, size)
+    largest.must_be_nil
+  end
+
   it "find largest in unsorted array" do
     size = 17
     my_integer_array = RestrictedArray.new(size)
@@ -75,6 +83,16 @@ describe "restricted array" do
     largest.must_equal my_integer_array[size - 1]
   end
 
+  it "find smallest in an empty array returns nil" do
+    size = 0
+    my_integer_array = RestrictedArray.new(size)
+
+    smallest = find_smallest(my_integer_array, size)
+
+    sort(my_integer_array, size)
+    smallest.must_be_nil
+  end
+
   it "find smallest in unsorted array" do
     size = 12
     my_integer_array = RestrictedArray.new(size)
@@ -93,6 +111,40 @@ describe "restricted array" do
     smallest = find_smallest(my_integer_array, size)
 
     smallest.must_equal my_integer_array[0]
+  end
+
+  it "reverse empty array" do
+    size = 0
+    my_integer_array = RestrictedArray.new(size)
+    test_array = Array.new(size)
+    size.times do |i|
+      test_array[i] = my_integer_array[i]
+    end
+    test_array.reverse!
+
+    reverse(my_integer_array, size)
+
+    length(my_integer_array).must_equal size
+    size.times do |i|
+      my_integer_array[i].must_equal test_array[i]
+    end
+  end
+
+  it "reverse array with one element" do
+    size = 1
+    my_integer_array = RestrictedArray.new(size)
+    test_array = Array.new(size)
+    size.times do |i|
+      test_array[i] = my_integer_array[i]
+    end
+    test_array.reverse!
+
+    reverse(my_integer_array, size)
+
+    length(my_integer_array).must_equal size
+    size.times do |i|
+      my_integer_array[i].must_equal test_array[i]
+    end
   end
 
   it "reverse array - odd count" do
@@ -183,6 +235,54 @@ describe "restricted array" do
     value_to_find = (size/2) * 10
 
     binary_search(my_integer_array, size, value_to_find).must_equal true
+  end
+
+  it "binary search method - value exists in first half of the array" do
+    size = 15
+    my_integer_array = RestrictedArray.new(size)
+    size.times do |i|
+      my_integer_array[i] = i * 10
+    end
+    value_to_find = (size/2 - 3) * 10
+
+    binary_search(my_integer_array, size, value_to_find).must_equal true
+  end
+
+  it "binary search method - value exists in last half of the array" do
+    size = 15
+    my_integer_array = RestrictedArray.new(size)
+    size.times do |i|
+      my_integer_array[i] = i * 10
+    end
+    value_to_find = (size/2 + 5) * 10
+
+    binary_search(my_integer_array, size, value_to_find).must_equal true
+  end
+
+  it "binary search method - finds all values in an odd-sized array" do
+    size = 15
+    my_integer_array = RestrictedArray.new(size)
+    size.times do |i|
+      my_integer_array[i] = i * 10
+    end
+
+    size.times { |i|
+      res = binary_search(my_integer_array, size, i * 10)
+      res.must_equal true
+    }
+  end
+
+  it "binary search method - finds all values in an even-sized array" do
+    size = 16
+    my_integer_array = RestrictedArray.new(size)
+    size.times do |i|
+      my_integer_array[i] = i * 10
+    end
+
+    size.times { |i|
+      res = binary_search(my_integer_array, size, i * 10)
+      res.must_equal true
+    }
   end
 
   it "binary search method - value does not exist in the array" do

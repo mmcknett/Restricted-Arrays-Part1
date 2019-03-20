@@ -45,33 +45,96 @@ end
 
 # Finds and returns the largest integer value the array
 # Assumes that the array is not sorted.
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity:
+#   O(n) where n is the length of the array. We have to inspect every
+#   element of the array to determine if it is the max, since we cannot
+#   assume the elements are ordered.
+# Space complexity:
+#   O(1). We only need two additional local variables.
 def find_largest(array, length)
-  raise NotImplementedError
+  return nil if array[0] == nil
+
+  max = array[0]
+  i = 1
+  until array[i] == nil do
+    max = array[i] > max ? array[i] : max
+    i += 1
+  end
+
+  return max
 end
 
 # Finds and returns the smallest integer value in the array
 # Assumes that the array is not sorted.
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity: Equivalent to find_largest
+# Space complexity: Equivalent to find_largest
 def find_smallest(array, length)
-  raise NotImplementedError
+  return nil if array[0] == nil
+
+  min = array[0]
+  i = 1
+  until array[i] == nil do
+    min = array[i] < min ? array[i] : min
+    i += 1
+  end
+
+  return min
 end
 
 # Reverses the values in the integer array in place
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity:
+#   There is 1 edge case operation. There are 5 operations prior to the loop.
+#   The loop runs n / 2 times.
+#   Each iteration, the loop does 6 operations.
+#   The total time complexity is thus 6 + 6(n/2) = O(n)
+# Space complexity:
+#   O(1). We allocate space for 3 additional integers.
+#   All changes to the string are done in place, requiring no space beyond that.
 def reverse(array, length)
-  raise NotImplementedError
+  if length < 2 then
+    return array
+  end
+
+  # Until you reach the middle of the array, swap
+  # an element from the front half with an element
+  # from the back half.
+  curr = 0
+  mid = length / 2
+  last = length - 1
+  until curr == mid do
+    array[curr], array[last - curr] = array[last - curr], array[curr]
+    curr += 1
+  end
+
+  return array
 end
 
 # For an array sorted in ascending order, searches for 'value_to_find'.
 # Returns true if found, false otherwise.
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity:
+#   O(log_2(n)) where n is the length of the array. Every iteration through
+#   the loop, we halve the size of the search space. We can only halve the
+#   problems space log_2(n) times before we run out of array to halve.
+# Space complexity:
+#   O(1). We use 3 local variables.
 def binary_search(array, length, value_to_find)
-  raise NotImplementedError
+  upper = length
+  lower = 0
+  until upper - 1 <= lower do
+    pos = lower + (upper - lower) / 2
+    return true if array[pos] == value_to_find
+
+    if value_to_find > array[pos] then
+      lower = pos
+    else
+      upper = pos
+    end
+    # puts "Looking for #{value_to_find} in range #{lower}..#{upper} at pos #{pos}"
+  end
+
+  return true if array[pos - 1] == value_to_find
+
+  return false
 end
 
 # Helper method provided to sort the array in ascending order
