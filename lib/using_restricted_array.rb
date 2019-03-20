@@ -28,10 +28,19 @@ end
 
 # For an unsorted array, searches for 'value_to_find'.
 # Returns true if found, false otherwise.
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity:
+#   O(n) where n is the length of the array. Worst case, the value is
+#   not in the array and we had to visit every element to check it.
+# Space complexity:
+#   O(1). We only needed one local variable in addition to the passed-in
+#   parameters.
 def search(array, length, value_to_find)
-  raise NotImplementedError
+  i = 0
+  until array[i] == nil do
+    return true if array[i] == value_to_find
+    i += 1
+  end
+  return false
 end
 
 # Finds and returns the largest integer value the array
