@@ -20,10 +20,16 @@ def length(array)
 end
 
 # Prints each integer values in the array
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity: O(n)
+# Space complexity: O(1)
 def print_array(array)
-  raise NotImplementedError
+  i = 0
+  until array[i] == nil do
+    print array[i]
+    print " " if array[i + 1] != nil
+    i += 1
+  end
+  puts ""
 end
 
 # For an unsorted array, searches for 'value_to_find'.
