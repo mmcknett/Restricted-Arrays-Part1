@@ -285,6 +285,19 @@ describe "restricted array" do
     }
   end
 
+  it "binary search method - finds all values in an odd-sized array mutually prime with 2" do
+    size = 23
+    my_integer_array = RestrictedArray.new(size)
+    size.times do |i|
+      my_integer_array[i] = i * 10
+    end
+
+    size.times { |i|
+      res = binary_search(my_integer_array, size, i * 10)
+      res.must_equal true
+    }
+  end
+
   it "binary search method - value does not exist in the array" do
     size = 15
     my_integer_array = RestrictedArray.new(size)
